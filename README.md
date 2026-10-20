@@ -1,29 +1,44 @@
 # device-protection-skills
 
-Skills for working alongside Aikido Device Protection.
+Agent skills for working with Aikido. Currently includes:
 
-## Skills
+- **[aikido-device-protection](skills/aikido-device-protection/SKILL.md)**:
+  teaches coding agents to recognize when a package install failure is actually
+  a Device Protection block (not an auth or registry problem), check
+  `aikidoctl events --json` before debugging, and avoid bypassing the block.
+- **[aikido-mcp-comments](skills/aikido-mcp-comments/SKILL.md)**: reads the
+  comments already posted on a GitHub, GitLab, or Azure DevOps pull/merge
+  request (including Aikido's own scan-result comment) through the native SCM
+  CLI (`gh`, `glab`, `az`) rather than the Aikido MCP server.
 
-### aikido-device-protection
+## Install
 
-Triggers on unexplained package install failures (HTTP 403, connection reset, or a version resolving older than expected) across npm, pip, Maven, NuGet, Go, Cargo, Composer, gem, Homebrew, and editor or browser extensions.
+Using the [skills CLI](https://www.npmjs.com/package/skills):
 
-These failures usually mean Device Protection blocked a malicious or policy-restricted package, but they look identical to an expired token. The skill tells Claude to run `aikidoctl events --json` and check for a matching block *before* debugging credentials, switching registries, or trying other workarounds, then walks through how to resolve each block type (malware, minimum package age, policy block, held for approval, certificate errors) without bypassing protection.
+```bash
+npx skills add noon-security/device-protection-skills
+```
 
-See [`skills/aikido-device-protection/SKILL.md`](skills/aikido-device-protection/SKILL.md).
+This clones the repo, lets you pick which agents to install to, and symlinks the
+skills into the right directory (e.g. `.claude/skills/` for Claude Code).
 
-### aikido-mcp-comments
+To install without prompts:
 
-Reads the comments already posted on a GitHub, GitLab, or Azure DevOps pull/merge request, including Aikido's own scan-result comment, through the native SCM CLI (`gh`, `glab`, `az`) rather than the Aikido MCP server.
+```bash
+npx skills add noon-security/device-protection-skills --all
+```
 
-Triggers when you ask what CI/CD said on a PR, or want the pipeline/Aikido comments read back or summarized.
+To install a specific skill only:
 
-See [`skills/aikido-mcp-comments/SKILL.md`](skills/aikido-mcp-comments/SKILL.md).
+```bash
+npx skills add noon-security/device-protection-skills -s aikido-device-protection
+```
 
-## Installation
+## Manual install
 
-Copy the skill directory into your project's `.claude/skills/` folder, or install it as a plugin per your setup.
+Copy the skill directories you want from `skills/` into your agent's skills
+directory (e.g. `.claude/skills/aikido-device-protection`).
 
 ## License
 
-Apache License 2.0, see [LICENSE](LICENSE).
+[Apache License 2.0](LICENSE)
