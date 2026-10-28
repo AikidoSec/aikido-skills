@@ -7,9 +7,9 @@ Agent skills for working with Aikido. Currently includes:
   a Device Protection block (not an auth or registry problem), check
   `aikidoctl events --json` before debugging, and avoid bypassing the block.
 - **[aikido-mcp-comments](skills/aikido-mcp-comments/SKILL.md)**: reads the
-  comments already posted on a GitHub, GitLab, or Azure DevOps pull/merge
-  request (including Aikido's own scan-result comment) through the native SCM
-  CLI (`gh`, `glab`, `az`) rather than the Aikido MCP server.
+  comments already posted on a GitHub, GitLab, Azure DevOps, or Bitbucket
+  pull/merge request (including Aikido's own scan-result comment) through the
+  native SCM CLI (`gh`, `glab`, `az`, `bkt`) rather than the Aikido MCP server.
 
 ## Install
 
