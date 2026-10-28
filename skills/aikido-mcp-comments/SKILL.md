@@ -1,6 +1,6 @@
 ---
 name: aikido-mcp-comments
-description: Fetches comments already posted on a GitHub/GitLab/Azure DevOps pull or merge request (e.g. CI bot results, review feedback, Aikido's own scan-result comment). Use when the user asks what CI/CD said, wants to read/check/summarize PR or MR comments, mentions "pipeline comments", or asks about "Aikido comments"/"Aikido feedback"/what Aikido said or found on a PR — this reads via the native SCM CLI (gh/glab/az), not the Aikido MCP server.
+description: Fetches comments already posted on a GitHub/GitLab/Azure DevOps/Bitbucket pull or merge request (e.g. CI bot results, review feedback, Aikido's own scan-result comment). Use when the user asks what CI/CD said, wants to read/check/summarize PR or MR comments, mentions "pipeline comments", or asks about "Aikido comments"/"Aikido feedback"/what Aikido said or found on a PR — this reads via the native SCM CLI (gh/glab/az/bkt), not the Aikido MCP server.
 ---
 
 Reading CI/CD or Aikido comments on a pull/merge request means fetching whatever is already
@@ -11,7 +11,8 @@ the native CLI already does it in one call.
 
 - If the user names a specific repo/PR (a URL, or `org/repo#123`), use that.
 - Otherwise, run `git remote get-url origin` in the current working directory and use the
-  current branch's PR/MR (the CLIs below auto-detect this when no number is given).
+  current branch's PR/MR (the CLIs below auto-detect this when no number is given, except
+  `bkt`, see reference.md).
 
 ## 2. Determine the platform
 
@@ -19,10 +20,11 @@ Match the remote host:
 - Contains `github` → **GitHub**, use `gh`.
 - Contains `gitlab` → **GitLab**, use `glab`.
 - Contains `dev.azure.com` or `visualstudio.com` → **Azure DevOps**, use `az`.
+- Contains `bitbucket` → **Bitbucket** (Cloud or Data Center), use `bkt`.
 
-If the host matches none of these (e.g. self-hosted with a custom domain, or Bitbucket), stop
-and ask the user which platform it is, or tell them this skill only covers GitHub/GitLab/Azure
-DevOps.
+If the host matches none of these (e.g. self-hosted with a custom domain), stop and ask the
+user which platform it is, or tell them this skill only covers GitHub/GitLab/Azure
+DevOps/Bitbucket.
 
 ## 3. Fetch the comments
 
@@ -37,6 +39,8 @@ Run the command directly, don't pre-check install or auth state first. See
 - **Auth error** (401/403, or the CLI reports not logged in): print the exact login command
   for that platform, ask the user to run it (it's an interactive browser flow you can't
   complete yourself), wait for their confirmation, then retry.
+- **No Bitbucket context** (`bkt` can't resolve the workspace/project or repo): print the
+  `bkt context create` command from reference.md for the user to run, then retry.
 
 ## 5. Present the results
 
