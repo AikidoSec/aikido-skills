@@ -22,9 +22,10 @@ Match the remote host:
 - Contains `dev.azure.com` or `visualstudio.com` → **Azure DevOps**, use `az`.
 - Contains `bitbucket` → **Bitbucket** (Cloud or Data Center), use `bkt`.
 
-If the host matches none of these (e.g. self-hosted with a custom domain), stop and ask the
-user which platform it is, or tell them this skill only covers GitHub/GitLab/Azure
-DevOps/Bitbucket.
+If the host matches none of these (e.g. self-hosted with a custom domain), ask the user which
+platform it is. If they identify it as Bitbucket, treat it as Bitbucket (Cloud or Data Center),
+use `bkt`, and follow the Bitbucket workflow in reference.md; otherwise tell them this skill only
+covers GitHub/GitLab/Azure DevOps/Bitbucket.
 
 ## 3. Fetch the comments
 

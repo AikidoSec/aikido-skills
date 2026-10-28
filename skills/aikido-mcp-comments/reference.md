@@ -63,14 +63,14 @@ community-maintained and covers both Bitbucket Cloud and Data Center.
   Data Center. Pass it as `-c <name>` on every `bkt` command below. No match means no context,
   see the recovery step in SKILL.md.
 - **Find the PR ID** for the current branch: `bkt pr comments` needs a PR number, it doesn't
-  detect the current branch's PR. Look it up first:
+  detect the current branch's PR. List the open PRs first:
   ```
   bkt pr list -c <name> --state OPEN --limit 0 --json \
-    --jq '.pull_requests[] | select((.source.branch.name // .fromRef.displayId) == "<branch>") | .id'
+    --jq '[.pull_requests[] | {id, branch: (.source.branch.name // .fromRef.displayId)}]'
   ```
-  `<branch>` is the output of `git branch --show-current`. Cloud returns `source.branch.name`,
-  Data Center returns `fromRef.displayId`, the filter handles both. If it prints nothing,
-  `null`, or more than one ID, ask the user for the PR number.
+  Then pick the entry whose `branch` equals the output of `git branch --show-current`. Never
+  put the branch name into the command: branch names can contain quotes and shell syntax. If
+  no entry or more than one matches, ask the user for the PR number.
 - **Fetch**, specific PR: `bkt pr comments <id> -c <name> --json`. Use `--json`, the text output
   has no timestamps and drops deeply nested Data Center replies. The `comments` array holds
   general, inline and reply comments:
