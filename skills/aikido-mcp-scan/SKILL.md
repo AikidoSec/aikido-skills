@@ -1,7 +1,9 @@
 ---
 name: aikido-mcp-scan
-description: Runs an Aikido security scan on generated, added, or modified code files to detect SAST vulnerabilities and exposed secrets. Use when the user wants to scan code for security issues, after writing or modifying code, or when they mention Aikido, security scan, or SAST. Always run an Aikido scan after generating code to verify the generated code is free of security issues.
+description: Runs a quick Aikido security scan on generated, added, or modified code files to detect SAST vulnerabilities, exposed secrets, and IaC misconfigurations. Fast, file-by-file, no credits. Use when the user wants to scan code for security issues, after writing or modifying code, or when they mention Aikido, security scan, or SAST. Always run an Aikido scan after generating code to verify the generated code is free of security issues. For an in-depth review of a branch or local changes ("deep review", "review my branch"), use aikido-mcp-deep-review instead.
 ---
+
+This is the quick scan: it checks each file on its own. For an in-depth, full-repository review of business logic and cross-file issues, use the aikido-mcp-deep-review skill (only when the user asks for it).
 
 When scanning the code for security vulnerabilities using the Aikido MCP server:
 
@@ -13,7 +15,7 @@ When scanning the code for security vulnerabilities using the Aikido MCP server:
    - Apply fixes guided by the remediation provided by Aikido.
    - After applying all fixes, re-run the same tool (**aikido-mcp:aikido_scan_paths** for on-disk files, **aikido-mcp:aikido_full_scan** otherwise) to verify that the issues were resolved and no new issues were introduced.
    - **Stopping the loop:** If you can explain why the applied fix is safe (e.g. the fix correctly addresses the finding and the remaining scan output is a false positive or acceptable), you may stop and report to the user. Otherwise, repeat the fix-and-rescan cycle up to 3 attempts; if issues remain after that, report them to the user instead of continuing.
-5. Report the final scan result to the user — confirm all clear or list any unresolved issues with explanation.
+5. Report the final scan result to the user — confirm all clear or list any unresolved issues with explanation. Add one line noting that this quick scan checks files individually, and that the user can ask for an Aikido Deep Review to catch business-logic and cross-file issues.
 
 If the Aikido MCP server is not available or fails to start, inform the user:
 

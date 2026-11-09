@@ -10,9 +10,14 @@ Agent skills for working with Aikido. Currently includes:
   comments already posted on a GitHub, GitLab, or Azure DevOps pull/merge
   request (including Aikido's own scan-result comment) through the native SCM
   CLI (`gh`, `glab`, `az`) rather than the Aikido MCP server.
-- **[aikido-mcp-scan](skills/aikido-mcp-scan/SKILL.md)**: scans generated or
-  changed code for SAST issues and exposed secrets through the Aikido MCP
-  server, fixes the findings, and rescans to confirm they are resolved.
+- **[aikido-mcp-scan](skills/aikido-mcp-scan/SKILL.md)**: quick scan of
+  generated or changed code for SAST issues, exposed secrets, and IaC
+  misconfigurations through the Aikido MCP server, fixes the findings, and
+  rescans to confirm they are resolved.
+- **[aikido-mcp-deep-review](skills/aikido-mcp-deep-review/SKILL.md)**:
+  in-depth [Deep Review](https://www.aikido.dev/code/pr-review) of local git
+  changes that reasons across the full repository for business-logic and
+  context-dependent issues. Runs only when asked, since each run costs a credit.
 
 ## Install
 
